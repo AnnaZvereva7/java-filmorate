@@ -10,7 +10,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-   InMemoryFilmManager filmManager = new InMemoryFilmManager();
+    InMemoryFilmManager filmManager = new InMemoryFilmManager();
 
     @GetMapping
     public Collection<Film> getFilms() {

@@ -10,11 +10,11 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-abstract class UserTests <T extends Manager>{
+abstract class UserTests<T extends Manager> {
     T manager;
 
     protected UserTests(T manager) {
-        this.manager=manager;
+        this.manager = manager;
     }
 
     @Test

@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class InMemoryFilmManager implements Manager<Film>{
+public class InMemoryFilmManager implements Manager<Film> {
     private final Map<Integer, Film> films = new HashMap<>();
-    private int lastId=0;
+    private int lastId = 0;
 
     public Collection<Film> get() {
         return films.values();
@@ -30,22 +30,22 @@ public class InMemoryFilmManager implements Manager<Film>{
         return newFilm;
     }
 
-    public Film update( Film film) {
+    public Film update(Film film) {
         isValid(film);
         if (films.containsKey(film.getId())) {
-                films.put(film.getId(), film);
-                return film;
+            films.put(film.getId(), film);
+            return film;
         } else {
             throw new ValidationException("Фильма с таким id нет");
         }
     }
 
-    public boolean isValid(Film film){
+    public boolean isValid(Film film) {
         if (film.getName().isBlank()) {
             log.debug("Название не может быть пустым");
             throw new ValidationException("Название не может быть пустым");
         }
-        if (film.getDescription().length()>200) {
+        if (film.getDescription().length() > 200) {
             log.debug("Длина описания должна быть <=200 символов");
             throw new ValidationException("Длина описания должна быть <=200 символов");
         }
@@ -53,7 +53,7 @@ public class InMemoryFilmManager implements Manager<Film>{
             log.debug("дата релиза — не раньше 28 декабря 1895 года");
             throw new ValidationException("дата релиза — не раньше 28 декабря 1895 года");
         }
-        if (film.getDuration()<=0) {
+        if (film.getDuration() <= 0) {
             log.debug("Продолжительность фильма должна быть положительной");
             throw new ValidationException("Продолжительность фильма должна быть положительной");
         }

@@ -12,7 +12,7 @@ import java.util.Map;
 @Slf4j
 public class InMemoryUserManager implements Manager<User> {
     private final Map<Integer, User> users = new HashMap<>();
-    private int lastUserId=0;
+    private int lastUserId = 0;
 
     public Collection<User> get() {
         return users.values();
@@ -36,11 +36,11 @@ public class InMemoryUserManager implements Manager<User> {
         return user;
     }
 
-    public User update (User user) {
+    public User update(User user) {
         isValid(user);
-        if(users.containsKey(user.getId())) {
-            if (user.getName()==null) {
-                user=user.withName(user.getLogin());
+        if (users.containsKey(user.getId())) {
+            if (user.getName() == null) {
+                user = user.withName(user.getLogin());
                 log.info("Установлено имя пользователя {}", user.getName());
             }
             users.put(user.getId(), user);
@@ -52,15 +52,15 @@ public class InMemoryUserManager implements Manager<User> {
     }
 
     public boolean isValid(User user) {
-        if ((user.getEmail().lastIndexOf("@") == -1)||user.getEmail().isBlank()) {
+        if ((user.getEmail().lastIndexOf("@") == -1) || user.getEmail().isBlank()) {
             log.debug("Не корректный email");
             throw new ValidationException("Не корректный email");
         }
-        if (user.getLogin().isBlank()||user.getLogin().lastIndexOf(" ")>-1) {
+        if (user.getLogin().isBlank() || user.getLogin().lastIndexOf(" ") > -1) {
             log.debug("Не корректный логин");
             throw new ValidationException("Не корректный логин");
         }
-        if(user.getBirthday().isAfter(LocalDate.now())) {
+        if (user.getBirthday().isAfter(LocalDate.now())) {
             log.debug("Не корректная дата рождения");
             throw new ValidationException("Не корректная дата рождения");
         }
