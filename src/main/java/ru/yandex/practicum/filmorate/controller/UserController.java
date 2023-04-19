@@ -10,7 +10,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    InMemoryUserManager userManager= new InMemoryUserManager();
+    InMemoryUserManager userManager = new InMemoryUserManager();
 
     @GetMapping
     public Collection<User> getUsers() {
@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PutMapping
-    public User updateUser (@RequestBody User user) {
+    public User updateUser(@RequestBody User user) {
         return userManager.update(user);
     }
 
