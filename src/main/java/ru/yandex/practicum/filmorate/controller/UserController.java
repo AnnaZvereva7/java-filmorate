@@ -15,7 +15,7 @@ public class UserController {
     InMemoryUserManager userManager;
 
     public UserController(InMemoryUserManager userManager) {
-        this.userManager=userManager;
+        this.userManager = userManager;
     }
 
     @GetMapping

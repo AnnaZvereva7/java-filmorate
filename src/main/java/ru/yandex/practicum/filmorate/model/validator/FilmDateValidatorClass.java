@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 
 @Slf4j
-public class FilmDateValidatorClass implements ConstraintValidator <FilmDateValidator, LocalDate> {
+public class FilmDateValidatorClass implements ConstraintValidator<FilmDateValidator, LocalDate> {
     @Override
     public boolean isValid(LocalDate releaseDate, ConstraintValidatorContext constraintValidatorContext) {
         if (releaseDate.isBefore(LocalDate.of(1895, 12, 28))) {

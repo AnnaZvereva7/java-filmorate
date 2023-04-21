@@ -18,7 +18,7 @@ public class RestControllerTests {
     private MockMvc mockMvc;
 
     @Test
-    void getFilmTest() throws Exception{
+    void getFilmTest() throws Exception {
         mockMvc.perform(get("/films")).andExpect(status().isOk());
     }
 
@@ -52,7 +52,7 @@ public class RestControllerTests {
                 andExpect(status().is(400));
 
         jsonFilm = "{\n" +
-                "  \"name\": \"nisi eiusmod\",\n"+
+                "  \"name\": \"nisi eiusmod\",\n" +
                 "  \"description\": \"adipisicing\",\n" +
                 "  \"releaseDate\": \"1895-12-27\",\n" +
                 "  \"duration\": 100\n" +
@@ -61,7 +61,7 @@ public class RestControllerTests {
                 andExpect(status().is(400));
 
         jsonFilm = "{\n" +
-                "  \"name\": \"nisi eiusmod\",\n"+
+                "  \"name\": \"nisi eiusmod\",\n" +
                 "  \"description\": \"adipisicing\",\n" +
                 "  \"releaseDate\": \"1895-12-29\",\n" +
                 "  \"duration\": 0\n" +
@@ -71,14 +71,14 @@ public class RestControllerTests {
     }
 
     @Test
-    void getUsersTest() throws Exception{
+    void getUsersTest() throws Exception {
         mockMvc.perform(get("/users")).andExpect(status().isOk());
     }
 
     @Test
-    void addUserTests() throws  Exception{
+    void addUserTests() throws Exception {
         String jsonUser = "{\n" +
-                "  \"login\": \"login\",\n"+
+                "  \"login\": \"login\",\n" +
                 "  \"name\": \"name\",\n" +
                 "  \"birthday\": \"1990-01-23\",\n" +
                 "  \"email\": \"mail@mail.ru\"\n" +
