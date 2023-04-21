@@ -9,6 +9,4 @@ public interface Manager<T> {
 
     T update(T t);
 
-    boolean isValid(T t);
-
 }
