@@ -30,10 +30,10 @@ public class RestControllerTests {
                 "  \"releaseDate\": \"1895-12-28\",\n" +
                 "  \"duration\": 100\n" +
                 "}";
-        mockMvc.perform(post("/films").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonFilm)).
-                andExpect(status().isOk());
+        mockMvc.perform(post("/films")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFilm))
+                .andExpect(status().isOk());
 
         jsonFilm = "{\n" +
                 "  \"name\": \" \",\n" +
@@ -41,20 +41,20 @@ public class RestControllerTests {
                 "  \"releaseDate\": \"1967-03-25\",\n" +
                 "  \"duration\": 100\n" +
                 "}";
-        mockMvc.perform(post("/films").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonFilm)).
-                andExpect(status().is(400));
+        mockMvc.perform(post("/films")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFilm))
+                .andExpect(status().is(400));
         jsonFilm = "{\n" +
                 "  \"name\": \" \",\n" +
                 "  \"description\": \"descriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescriptiodescription\",\n" +
                 "  \"releaseDate\": \"1967-03-25\",\n" +
                 "  \"duration\": 100\n" +
                 "}";
-        mockMvc.perform(post("/films").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonFilm)).
-                andExpect(status().is(400));
+        mockMvc.perform(post("/films")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFilm))
+                .andExpect(status().is(400));
 
         jsonFilm = "{\n" +
                 "  \"name\": \"nisi eiusmod\",\n" +
@@ -62,10 +62,10 @@ public class RestControllerTests {
                 "  \"releaseDate\": \"1895-12-27\",\n" +
                 "  \"duration\": 100\n" +
                 "}";
-        mockMvc.perform(post("/films").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonFilm)).
-                andExpect(status().is(400));
+        mockMvc.perform(post("/films")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFilm))
+                .andExpect(status().is(400));
 
         jsonFilm = "{\n" +
                 "  \"name\": \"nisi eiusmod\",\n" +
@@ -73,10 +73,10 @@ public class RestControllerTests {
                 "  \"releaseDate\": \"1895-12-29\",\n" +
                 "  \"duration\": 0\n" +
                 "}";
-        mockMvc.perform(post("/films").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonFilm)).
-                andExpect(status().is(400));
+        mockMvc.perform(post("/films")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFilm))
+                .andExpect(status().is(400));
     }
 
     @Test
@@ -92,10 +92,10 @@ public class RestControllerTests {
                 "  \"birthday\": \"1990-01-23\",\n" +
                 "  \"email\": \"mail@mail.ru\"\n" +
                 "}";
-        mockMvc.perform(post("/users").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonUser)).
-                andExpect(status().isOk());
+        mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonUser))
+                .andExpect(status().isOk());
 
         jsonUser = "{\n" +
                 "  \"login\": \"lo gin\",\n" +
@@ -103,30 +103,30 @@ public class RestControllerTests {
                 "  \"birthday\": \"1990-01-23\",\n" +
                 "  \"email\": \"mail@mail.ru\"\n" +
                 "}";
-        mockMvc.perform(post("/users").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonUser)).
-                andExpect(status().is(400));
+        mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonUser))
+                .andExpect(status().is(400));
 
         jsonUser = "{\n" +
                 "  \"login\": \"login\",\n" +
                 "  \"birthday\": \"1990-01-23\",\n" +
                 "  \"email\": \"mailru\"\n" +
                 "}";
-        mockMvc.perform(post("/users").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonUser)).
-                andExpect(status().is(400));
+        mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonUser))
+                .andExpect(status().is(400));
 
         jsonUser = "{\n" +
                 "  \"login\": \"lo gin\",\n" +
                 "  \"birthday\": \"2024-01-23\",\n" +
                 "  \"email\": \"mail@mail.ru\"\n" +
                 "}";
-        mockMvc.perform(post("/users").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(jsonUser)).
-                andExpect(status().is(400));
+        mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonUser))
+                .andExpect(status().is(400));
     }
 
 }
