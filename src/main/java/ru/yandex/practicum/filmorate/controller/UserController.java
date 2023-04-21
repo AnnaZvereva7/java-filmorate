@@ -9,7 +9,6 @@ import ru.yandex.practicum.filmorate.model.User;
 import javax.validation.Valid;
 import java.util.Collection;
 
-
 @RestController
 @RequestMapping("/users")
 @Component
@@ -34,6 +33,5 @@ public class UserController {
     public User updateUser(@Valid @RequestBody User user) {
         return userManager.update(user);
     }
-
 
 }

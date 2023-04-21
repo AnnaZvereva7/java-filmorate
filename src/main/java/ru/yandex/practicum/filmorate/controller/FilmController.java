@@ -8,12 +8,12 @@ import ru.yandex.practicum.filmorate.model.Film;
 import javax.validation.Valid;
 import java.util.Collection;
 
-
 @RestController
 @RequestMapping("/films")
 @Component
 public class FilmController {
-    private  final InMemoryFilmManager filmManager;
+    private final InMemoryFilmManager filmManager;
+
     public FilmController(InMemoryFilmManager filmManager) {
         this.filmManager = filmManager;
     }
