@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.model;
 
-
 import lombok.Data;
 import lombok.With;
 import ru.yandex.practicum.filmorate.model.validator.FilmDateValidator;
