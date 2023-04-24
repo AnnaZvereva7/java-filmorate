@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.managers;
+package ru.yandex.practicum.filmorate.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class InMemoryUserManager implements Manager<User> {
+public class InMemoryUserManager implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
     private int lastUserId = 0;
 

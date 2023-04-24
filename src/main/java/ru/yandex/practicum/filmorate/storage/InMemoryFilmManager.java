@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.managers;
+package ru.yandex.practicum.filmorate.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class InMemoryFilmManager implements Manager<Film> {
+public class InMemoryFilmManager implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
     private int lastId = 0;
 

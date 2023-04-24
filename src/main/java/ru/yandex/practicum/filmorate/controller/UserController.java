@@ -2,7 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.managers.InMemoryUserManager;
+import ru.yandex.practicum.filmorate.storage.InMemoryUserManager;
 import ru.yandex.practicum.filmorate.model.User;
 
 import javax.validation.Valid;
