@@ -15,12 +15,16 @@ public class InMemoryUserManager implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
     private int lastUserId = 0;
 
-    public Collection<User> get() {
+    public Collection<User> getList() {
         return users.values();
     }
 
+    public Map<Integer, User> get() {
+        return users;
+    }
+
     public User add(User user) {
-        if (user.getName() == null) {
+        if (user.getName().isBlank()) {
             user = user.withName(user.getLogin());
             log.info("Установлено имя пользователя {}", user.getName());
         }

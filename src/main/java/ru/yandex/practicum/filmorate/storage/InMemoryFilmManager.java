@@ -1,23 +1,22 @@
 package ru.yandex.practicum.filmorate.storage;
 
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.exceptions.ValidationException;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
 public class InMemoryFilmManager implements FilmStorage {
-    private final Map<Integer, Film> films = new HashMap<>();
+
+    private final Map<Integer, Film> films = new TreeMap<>();
     private int lastId = 0;
 
-    public Collection<Film> get() {
-        return films.values();
+    @Override
+    public Map<Integer, Film> get() {
+        return films;
     }
 
     public Film add(Film film) {
@@ -25,9 +24,9 @@ public class InMemoryFilmManager implements FilmStorage {
             throw new ValidationException("фильм с таким id уже есть");
         }
         lastId += 1;
-        val newFilm = film.withId(lastId);
-        films.put(lastId, newFilm);
-        return newFilm;
+        film = film.withId(lastId);
+        films.put(lastId, film);
+        return film;
     }
 
     public Film update(Film film) {
