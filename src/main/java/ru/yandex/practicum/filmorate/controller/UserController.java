@@ -21,17 +21,17 @@ public class UserController {
 
     @GetMapping
     public Collection<User> getUsers() {
-        return userService.getUserManager().getList();
+        return userService.getUsers();
     }
 
     @PostMapping
     public User addUser(@Valid @RequestBody User user) {
-        return userService.getUserManager().add(user);
+        return userService.addUser(user);
     }
 
     @PutMapping
     public User updateUser(@Valid @RequestBody User user) {
-        return userService.getUserManager().update(user);
+        return userService.updateUser(user);
     }
 
     @PutMapping("{id}/friends/{friendId}")

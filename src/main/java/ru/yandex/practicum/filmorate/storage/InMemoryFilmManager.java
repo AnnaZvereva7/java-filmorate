@@ -15,7 +15,7 @@ public class InMemoryFilmManager implements FilmStorage {
     private int lastId = 0;
 
     @Override
-    public Map<Integer, Film> get() {
+    public Map<Integer, Film> getFilms() {
         return films;
     }
 

@@ -19,68 +19,61 @@ public class UserService {
         this.userManager = userManager;
     }
 
-    public InMemoryUserManager getUserManager() {
-        return userManager;
+    public User addUser(User user) {
+        return userManager.add(user);
+    }
+
+    public User updateUser(User user) {
+        return userManager.update(user);
+    }
+
+    public Collection<User> getUsers() {
+        return userManager.getList();
     }
 
     public void addFriends(Integer id, Integer friendId) {
-        if (userManager.get().containsKey(id) && userManager.get().containsKey(friendId)) {
-            User user = userManager.get().get(id);
-            User userToAdd = userManager.get().get(friendId);
-            if (userToAdd.getFriendsId().contains(id)) {
-                throw new KeyAlreadyExistsException("Уже есть такой друг");
-            } else {
-                user.getFriendsId().add(friendId);
-                userToAdd.getFriendsId().add(id);
-            }
+        User user = getUserById(id);
+        User userToAdd = getUserById(friendId);
+        if (userToAdd.getFriendsId().contains(id)) {
+            throw new KeyAlreadyExistsException("Уже есть такой друг");
         } else {
-            throw new NullPointerException("Пользователь с некорректным id");
+            user.getFriendsId().add(friendId);
+            userToAdd.getFriendsId().add(id);
         }
-
     }
 
     public void removeFriends(Integer id, Integer friendId) {
-        if (userManager.get().containsKey(id) && userManager.get().containsKey(friendId)) {
-            User user = userManager.get().get(id);
-            User userToDelete = userManager.get().get(friendId);
-            if (user.getFriendsId().contains(friendId)) {
-                user.getFriendsId().remove(friendId);
-                userToDelete.getFriendsId().remove(id);
-            } else {
-                throw new NullPointerException("Такого пользователя нет в друзьях");
-            }
+        User user = getUserById(id);
+        User userToDelete = getUserById(friendId);
+        if (user.getFriendsId().contains(friendId)) {
+            user.getFriendsId().remove(friendId);
+            userToDelete.getFriendsId().remove(id);
         } else {
-            throw new NullPointerException("Пользователь с некорректным id");
+            throw new NullPointerException("Такого пользователя нет в друзьях");
         }
-
     }
 
     public Collection<User> getCommonFriends(Integer id, Integer otherId) {
-        if (userManager.get().containsKey(id) && userManager.get().containsKey(otherId)) {
-            User user1 = userManager.get().get(id);
-            User user2 = userManager.get().get(otherId);
-            Collection<User> commonFriends = new ArrayList<>();
-            if (!user1.getFriendsId().isEmpty()) {
-                for (Integer idOfFriend : user1.getFriendsId()) {
-                    if (user2.getFriendsId().contains(idOfFriend)) {
-                        commonFriends.add(userManager.get().get(idOfFriend));
-                    }
+        User user1 = getUserById(id);
+        User user2 = getUserById(otherId);
+        Collection<User> commonFriends = new ArrayList<>();
+        if (!user1.getFriendsId().isEmpty()) {
+            for (Integer idOfFriend : user1.getFriendsId()) {
+                if (user2.getFriendsId().contains(idOfFriend)) {
+                    commonFriends.add(getUserById(idOfFriend));
                 }
             }
-            return commonFriends;
-        } else {
-            throw new NullPointerException("Пользователь с некорректным id");
         }
-
+        return commonFriends;
     }
 
     public Collection<User> getListOfFriends(Integer id) {
-        if (userManager.get().get(id).getFriendsId().size() == 0) {
+        if (getUserById(id).getFriendsId().size() == 0) {
             throw new NullPointerException("Список друзей пользователя пуст");
         } else {
             Collection<User> friends = new TreeSet<>();
-            for (Integer idOfFriend : userManager.get().get(id).getFriendsId()) {
-                friends.add(userManager.get().get(idOfFriend));
+            for (Integer idOfFriend : getUserById(id).getFriendsId()) {
+                friends.add(getUserById(idOfFriend));
             }
             return friends;
         }

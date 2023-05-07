@@ -18,13 +18,21 @@ public class FilmService {
         this.filmManager = filmManager;
     }
 
-    public InMemoryFilmManager getFilmManager() {
-        return filmManager;
+    public Collection<Film> getFilms() {
+        return filmManager.getFilms().values();
+    }
+
+    public Film addFilm(Film film) {
+        return filmManager.add(film);
+    }
+
+    public Film updateFilm(Film film) {
+        return filmManager.update(film);
     }
 
     public Film getFilmById(Integer id) {
-        if (filmManager.get().containsKey(id)) {
-            return filmManager.get().get(id);
+        if (filmManager.getFilms().containsKey(id)) {
+            return filmManager.getFilms().get(id);
         } else {
             throw new NullPointerException("Фильма с таким id нет");
         }
@@ -34,31 +42,22 @@ public class FilmService {
         if (userId <= 0) {
             throw new NullPointerException("Не корректный id пользователя");
         }
-        if (filmManager.get().containsKey(id)) {
-            filmManager.get().get(id).getUsersLike().add(userId);
-        } else {
-            throw new NullPointerException("Такого фильма нет");
-        }
+        getFilmById(id).getUsersLike().add(userId);
     }
 
     public void deleteFilmLike(Integer id, Integer userId) {
         if (userId <= 0) {
             throw new NullPointerException("Не корректный id пользователя");
         }
-        if (filmManager.get().containsKey(id)) {
-            filmManager.get().get(id).getUsersLike().remove(userId);
-        } else {
-            throw new NullPointerException("Такого фильма нет");
-        }
+        getFilmById(id).getUsersLike().remove(userId);
     }
 
     public Collection<Film> getTop(int count) {
-        List<Film> top = new ArrayList<>(filmManager.get().values());
+        List<Film> top = new ArrayList<>(filmManager.getFilms().values());
         top.sort((filmLeft, filmRight) -> filmRight.getUsersLike().size() - filmLeft.getUsersLike().size());
         if (top.size() > count) {
             top = top.subList(0, count);
         }
         return top;
     }
-
 }
