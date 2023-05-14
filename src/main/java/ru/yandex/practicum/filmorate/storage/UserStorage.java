@@ -9,7 +9,8 @@ public interface UserStorage {
 
     Collection<User> getList();
 
-    User getUserById (int id);
+    User getUserById(int id);
+
     Map<Integer, User> get();
 
     User add(User user);

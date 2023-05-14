@@ -23,7 +23,7 @@ public class FilmService {
     }
 
     public Film addFilm(Film film) {
-        if(film==null) {
+        if (film == null) {
             throw new NullPointerException("Передан пустой фильм");
         }
         return filmManager.add(film);

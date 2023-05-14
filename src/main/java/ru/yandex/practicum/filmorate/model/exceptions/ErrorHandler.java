@@ -24,7 +24,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> validationConstraintError(MethodArgumentNotValidException e){
+    public Map<String, String> validationConstraintError(MethodArgumentNotValidException e) {
         log.debug("Получен статус 400 Bad request {}", e.getMessage(), e);
         return Map.of("error", e.getMessage());
     }
