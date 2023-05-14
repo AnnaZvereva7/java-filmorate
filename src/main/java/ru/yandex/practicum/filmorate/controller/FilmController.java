@@ -1,22 +1,21 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/films")
-@Service
+@RequiredArgsConstructor
+@Validated
 public class FilmController {
     private final FilmService filmService;
-
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
-    }
 
     @GetMapping
     public Collection<Film> getFilms() {
@@ -44,10 +43,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public Collection<Film> getTopFilms(@RequestParam(required = false) Integer count) {
-        if (count == null) {
-            count = 10;
-        }
+    public Collection<Film> getTopFilms(@RequestParam(defaultValue = "10") @Positive Integer count) {
         return filmService.getTop(count);
     }
 

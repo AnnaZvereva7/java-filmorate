@@ -3,7 +3,7 @@ package ru.yandex.practicum.filmorate.service;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.storage.InMemoryFilmManager;
+import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,9 +12,9 @@ import java.util.List;
 @Service
 @Component
 public class FilmService {
-    private final InMemoryFilmManager filmManager;
+    private final FilmStorage filmManager;
 
-    public FilmService(InMemoryFilmManager filmManager) {
+    public FilmService(FilmStorage filmManager) {
         this.filmManager = filmManager;
     }
 
@@ -23,6 +23,9 @@ public class FilmService {
     }
 
     public Film addFilm(Film film) {
+        if(film==null) {
+            throw new NullPointerException("Передан пустой фильм");
+        }
         return filmManager.add(film);
     }
 
@@ -30,22 +33,18 @@ public class FilmService {
         return filmManager.update(film);
     }
 
-    public Film getFilmById(Integer id) {
-        if (filmManager.getFilms().containsKey(id)) {
-            return filmManager.getFilms().get(id);
-        } else {
-            throw new NullPointerException("Фильма с таким id нет");
-        }
+    public Film getFilmById(int id) {
+        return filmManager.getFilmById(id);
     }
 
-    public void addFilmLike(Integer id, Integer userId) {
+    public void addFilmLike(int id, int userId) {
         if (userId <= 0) {
             throw new NullPointerException("Не корректный id пользователя");
         }
         getFilmById(id).getUsersLike().add(userId);
     }
 
-    public void deleteFilmLike(Integer id, Integer userId) {
+    public void deleteFilmLike(int id, int userId) {
         if (userId <= 0) {
             throw new NullPointerException("Не корректный id пользователя");
         }

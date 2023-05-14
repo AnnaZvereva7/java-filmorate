@@ -1,9 +1,10 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.storage.InMemoryUserManager;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.ArrayList;
@@ -12,19 +13,29 @@ import java.util.TreeSet;
 
 @Service
 @Component
+@Slf4j
 public class UserService {
-    private final InMemoryUserManager userManager;
+    private final UserStorage userManager;
 
-    public UserService(InMemoryUserManager userManager) {
+    public UserService(UserStorage userManager) {
         this.userManager = userManager;
     }
 
     public User addUser(User user) {
-        return userManager.add(user);
+        return userManager.add(renameUser(user));
+    }
+
+    public User renameUser(User user) {
+        if (user.getName() == null) {
+            user = user.rename(user);
+        } else if (user.getName().isBlank()) {
+            user = user.rename(user);
+        }
+        return user;
     }
 
     public User updateUser(User user) {
-        return userManager.update(user);
+        return userManager.update(renameUser(user));
     }
 
     public Collection<User> getUsers() {
@@ -34,19 +45,17 @@ public class UserService {
     public void addFriends(Integer id, Integer friendId) {
         User user = getUserById(id);
         User userToAdd = getUserById(friendId);
-        if (userToAdd.getFriendsId().contains(id)) {
-            throw new KeyAlreadyExistsException("Уже есть такой друг");
-        } else {
-            user.getFriendsId().add(friendId);
+        if (user.getFriendsId().add(friendId)) {
             userToAdd.getFriendsId().add(id);
+        } else {
+            throw new KeyAlreadyExistsException("Уже есть такой друг");
         }
     }
 
     public void removeFriends(Integer id, Integer friendId) {
         User user = getUserById(id);
         User userToDelete = getUserById(friendId);
-        if (user.getFriendsId().contains(friendId)) {
-            user.getFriendsId().remove(friendId);
+        if (user.getFriendsId().remove(friendId)) {
             userToDelete.getFriendsId().remove(id);
         } else {
             throw new NullPointerException("Такого пользователя нет в друзьях");
@@ -80,11 +89,7 @@ public class UserService {
     }
 
     public User getUserById(Integer id) {
-        if (userManager.get().containsKey(id)) {
-            return userManager.get().get(id);
-        } else {
-            throw new NullPointerException("Пользователя с таким id нет");
-        }
+        return userManager.getUserById(id);
     }
 
 }

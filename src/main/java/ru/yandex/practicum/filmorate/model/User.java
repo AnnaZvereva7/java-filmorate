@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@Slf4j
 public class User implements Comparable<User> {
     @With
     private final int id;
@@ -30,6 +32,12 @@ public class User implements Comparable<User> {
 
     public int compareTo(User user) {
         return user.name.compareTo(this.name);
+    }
+
+    public User rename(User user) {
+        user = user.withName(user.getLogin());
+        log.debug("Установлено имя пользователя {}", user.getName());
+        return user;
     }
 
 }

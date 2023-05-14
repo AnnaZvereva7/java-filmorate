@@ -20,9 +20,6 @@ public class InMemoryFilmManager implements FilmStorage {
     }
 
     public Film add(Film film) {
-        if (films.containsKey(film.getId())) {
-            throw new ValidationException("фильм с таким id уже есть");
-        }
         lastId += 1;
         film = film.withId(lastId);
         films.put(lastId, film);
@@ -35,6 +32,14 @@ public class InMemoryFilmManager implements FilmStorage {
             return film;
         } else {
             throw new ValidationException("Фильма с таким id нет");
+        }
+    }
+
+    public Film getFilmById(int id) {
+        if (films.containsKey(id)) {
+            return films.get(id);
+        } else {
+            throw new NullPointerException("Фильма с таким id нет");
         }
     }
 }
