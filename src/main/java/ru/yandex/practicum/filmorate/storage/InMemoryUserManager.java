@@ -3,7 +3,6 @@ package ru.yandex.practicum.filmorate.storage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.model.exceptions.ValidationException;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,7 +42,7 @@ public class InMemoryUserManager implements UserStorage {
         if (users.containsKey(user.getId())) {
             users.put(user.getId(), user);
         } else {
-            throw new ValidationException("Такого пользователя нет");
+            throw new NullPointerException("Такого пользователя нет");
         }
         return user;
     }

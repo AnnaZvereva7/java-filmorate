@@ -3,7 +3,6 @@ package ru.yandex.practicum.filmorate.storage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.exceptions.ValidationException;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,7 +31,7 @@ public class InMemoryFilmManager implements FilmStorage {
             films.put(film.getId(), film);
             return film;
         } else {
-            throw new ValidationException("Фильма с таким id нет");
+            throw new NullPointerException("Фильма с таким id нет");
         }
     }
 
