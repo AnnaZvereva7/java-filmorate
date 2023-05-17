@@ -15,7 +15,7 @@ import java.util.Map;
 @Slf4j
 public class ErrorHandler {
 
-    @ExceptionHandler(NullPointerException.class)
+    @ExceptionHandler({NullPointerException.class, ObjectNotFound.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> nullObject(NullPointerException e) {
         log.debug("Получен статус 404 Not found {}", e.getMessage(), e);

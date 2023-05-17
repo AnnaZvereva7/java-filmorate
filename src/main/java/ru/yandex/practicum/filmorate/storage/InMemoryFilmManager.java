@@ -3,7 +3,9 @@ package ru.yandex.practicum.filmorate.storage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.exceptions.ObjectNotFound;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,8 +17,8 @@ public class InMemoryFilmManager implements FilmStorage {
     private int lastId = 0;
 
     @Override
-    public Map<Integer, Film> getFilms() {
-        return films;
+    public List<Film> getFilms() {
+        return List.copyOf(films.values());
     }
 
     public Film add(Film film) {
@@ -31,7 +33,7 @@ public class InMemoryFilmManager implements FilmStorage {
             films.put(film.getId(), film);
             return film;
         } else {
-            throw new NullPointerException("Фильма с таким id нет");
+            throw new ObjectNotFound(Film.class);
         }
     }
 
@@ -39,7 +41,7 @@ public class InMemoryFilmManager implements FilmStorage {
         if (films.containsKey(id)) {
             return films.get(id);
         } else {
-            throw new NullPointerException("Фильма с таким id нет");
+            throw new ObjectNotFound(Film.class);
         }
     }
 }
