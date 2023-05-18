@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserStorage {
 
-    List<User> getList();
+    List<User> getAll();
 
     User getUserById(int id);
 

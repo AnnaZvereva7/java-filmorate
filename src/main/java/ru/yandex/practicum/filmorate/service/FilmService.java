@@ -7,7 +7,6 @@ import ru.yandex.practicum.filmorate.model.exceptions.ObjectNotFound;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -18,41 +17,41 @@ public class FilmService {
         this.filmManager = filmManager;
     }
 
-    public Collection<Film> getFilms() {
-        return filmManager.getFilms();
+    public List<Film> getAll() {
+        return filmManager.getAll();
     }
 
-    public Film addFilm(Film film) {
+    public Film add(Film film) {
         if (film == null) {
             throw new NullPointerException("Передан пустой фильм");
         }
         return filmManager.add(film);
     }
 
-    public Film updateFilm(Film film) {
+    public Film update(Film film) {
         return filmManager.update(film);
     }
 
-    public Film getFilmById(int id) {
-        return filmManager.getFilmById(id);
+    public Film getById(int id) {
+        return filmManager.getById(id);
     }
 
-    public void addFilmLike(int id, int userId) {
+    public void addLike(int id, int userId) {
         if (userId <= 0) {
             throw new ObjectNotFound(User.class);
         }
-        getFilmById(id).getUsersLike().add(userId);
+        getById(id).getUsersLike().add(userId);
     }
 
     public void deleteFilmLike(int id, int userId) {
         if (userId <= 0) {
             throw new ObjectNotFound(User.class);
         }
-        getFilmById(id).getUsersLike().remove(userId);
+        getById(id).getUsersLike().remove(userId);
     }
 
-    public Collection<Film> getTop(int count) {
-        List<Film> top = new ArrayList<>(filmManager.getFilms());
+    public List<Film> getTop(int count) {
+        List<Film> top = new ArrayList<>(filmManager.getAll());
         top.sort((filmLeft, filmRight) -> filmRight.getUsersLike().size() - filmLeft.getUsersLike().size());
         if (top.size() > count) {
             top = top.subList(0, count);

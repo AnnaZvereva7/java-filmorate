@@ -15,7 +15,7 @@ public class InMemoryUserManager implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
     private int lastUserId = 0;
 
-    public List<User> getList() {
+    public List<User> getAll() {
         return List.copyOf(users.values());
     }
 

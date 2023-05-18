@@ -8,6 +8,7 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.Collection;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -20,28 +21,25 @@ public class UserService {
         this.userManager = userManager;
     }
 
-    public User addUser(User user) {
-        return userManager.add(renameUser(user));
+    public User getById(Integer id) {
+        return userManager.getUserById(id);
     }
 
-    private User renameUser(User user) {
-        if (user.getName() == null || user.getName().isBlank()) {
-            user = user.rename(user);
-        }
-        return user;
+    public User add(User user) {
+        return userManager.add(rename(user));
     }
 
-    public User updateUser(User user) {
-        return userManager.update(renameUser(user));
+    public User update(User user) {
+        return userManager.update(rename(user));
     }
 
-    public Collection<User> getUsers() {
-        return userManager.getList();
+    public List<User> getAll() {
+        return userManager.getAll();
     }
 
     public void addFriends(Integer id, Integer friendId) {
-        User user = getUserById(id);
-        User userToAdd = getUserById(friendId);
+        User user = getById(id);
+        User userToAdd = getById(friendId);
         if (user.getFriendsId().add(friendId)) {
             userToAdd.getFriendsId().add(id);
         } else {
@@ -49,9 +47,9 @@ public class UserService {
         }
     }
 
-    public void removeFriends(Integer id, Integer friendId) {
-        User user = getUserById(id);
-        User userToDelete = getUserById(friendId);
+    public void remove(Integer id, Integer friendId) {
+        User user = getById(id);
+        User userToDelete = getById(friendId);
         if (user.getFriendsId().remove(friendId)) {
             userToDelete.getFriendsId().remove(id);
         } else {
@@ -59,27 +57,30 @@ public class UserService {
         }
     }
 
-    public Collection<User> getCommonFriends(Integer id, Integer otherId) {
-        User user1 = getUserById(id);
-        User user2 = getUserById(otherId);
+    public List<User> getCommonFriends(Integer id, Integer otherId) {
+        User user1 = getById(id);
+        User user2 = getById(otherId);
         return user1.getFriendsId().stream()
                 .filter(it -> user2.getFriendsId().contains(it))
-                .map(this::getUserById)
+                .map(this::getById)
                 .collect(Collectors.toList());
     }
 
     public Collection<User> getListOfFriends(Integer id) {
         Collection<User> friends = new TreeSet<>();
-        if (getUserById(id).getFriendsId().size() != 0) {
-            for (Integer idOfFriend : getUserById(id).getFriendsId()) {
-                friends.add(getUserById(idOfFriend));
+        if (getById(id).getFriendsId().size() != 0) {
+            for (Integer idOfFriend : getById(id).getFriendsId()) {
+                friends.add(getById(idOfFriend));
             }
         }
         return friends;
     }
 
-    public User getUserById(Integer id) {
-        return userManager.getUserById(id);
+    private User rename(User user) {
+        if (user.getName() == null || user.getName().isBlank()) {
+            user = user.rename(user);
+        }
+        return user;
     }
 
 }

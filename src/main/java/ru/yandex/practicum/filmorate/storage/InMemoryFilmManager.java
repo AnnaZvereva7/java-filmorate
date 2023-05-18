@@ -17,7 +17,7 @@ public class InMemoryFilmManager implements FilmStorage {
     private int lastId = 0;
 
     @Override
-    public List<Film> getFilms() {
+    public List<Film> getAll() {
         return List.copyOf(films.values());
     }
 
@@ -37,7 +37,7 @@ public class InMemoryFilmManager implements FilmStorage {
         }
     }
 
-    public Film getFilmById(int id) {
+    public Film getById(int id) {
         if (films.containsKey(id)) {
             return films.get(id);
         } else {
