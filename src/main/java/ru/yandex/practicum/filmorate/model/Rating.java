@@ -1,0 +1,18 @@
+package ru.yandex.practicum.filmorate.model;
+
+public enum Rating {
+    G("у фильма нет возрастных ограничений"),
+    PG("детям рекомендуется смотреть фильм с родителями"),
+    PG13("детям до 13 лет просмотр не желателен"),
+    R("лицам до 17 лет просматривать фильм можно только в присутствии взрослого"),
+    NC("лицам до 18 лет просмотр запрещён");
+    private String description;
+
+    private Rating(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
