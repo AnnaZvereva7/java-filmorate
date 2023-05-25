@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.model.exceptions;
+package ru.yandex.practicum.filmorate.exceptions;
 
 public class ObjectNotFound extends NullPointerException {
     public ObjectNotFound(Class obj) {

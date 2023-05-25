@@ -1,10 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.With;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.*;
@@ -14,7 +11,9 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
+//@Qualifier("InMemory")
 @Slf4j
+@Builder
 public class User implements Comparable<User> {
     @With
     private final int id;

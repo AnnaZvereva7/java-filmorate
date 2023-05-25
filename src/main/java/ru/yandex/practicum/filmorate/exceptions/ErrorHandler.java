@@ -1,6 +1,8 @@
-package ru.yandex.practicum.filmorate.model.exceptions;
+package ru.yandex.practicum.filmorate.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +16,13 @@ import java.util.Map;
 @RestControllerAdvice("ru.yandex.practicum.filmorate")
 @Slf4j
 public class ErrorHandler {
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> notFoundInDB(DataIntegrityViolationException e) {
+        log.debug("Получен статус 404 Not found {}", e.getMessage(), e);
+        return Map.of("error", e.getMessage());
+    }
 
     @ExceptionHandler({NullPointerException.class, ObjectNotFound.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -33,6 +42,13 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> wrongIdError(RuntimeException e) {
         log.debug("Получен статус 400 Bad request {}", e.getMessage(), e);
+        return Map.of("error", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> badRequestToDB(DataAccessException e) {
+        log.debug("Получен статус 404 Not found {}", e.getMessage(), e);
         return Map.of("error", e.getMessage());
     }
 

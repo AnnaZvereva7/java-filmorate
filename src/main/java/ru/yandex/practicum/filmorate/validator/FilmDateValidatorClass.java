@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.model.validator;
+package ru.yandex.practicum.filmorate.validator;
 
 import lombok.extern.slf4j.Slf4j;
 
