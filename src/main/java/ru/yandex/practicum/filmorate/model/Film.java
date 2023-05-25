@@ -35,7 +35,6 @@ public class Film {
     private final int duration;
     @JsonIgnore
     private final Set<Integer> usersLike = new HashSet<>();
-    @NotNull
     private final Rating mpa;
     private final List<Genre> genres = new ArrayList<>();
 }

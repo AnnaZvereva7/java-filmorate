@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Rating {
+    NO_RATING(0, "NO_RATING", "у фильма нет рейтинга"),
     G(1, "G", "у фильма нет возрастных ограничений"),
     PG(2, "PG", "детям рекомендуется смотреть фильм с родителями"),
     PG13(3, "PG-13", "детям до 13 лет просмотр не желателен"),

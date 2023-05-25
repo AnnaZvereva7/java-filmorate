@@ -9,6 +9,8 @@ import ru.yandex.practicum.filmorate.exceptions.ObjectNotFound;
 import ru.yandex.practicum.filmorate.model.Rating;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/mpa")
@@ -24,6 +26,6 @@ public class MpaController {
 
     @GetMapping
     public List<Rating> getAll() {
-        return List.of(Rating.values());
+        return Stream.of(Rating.values()).filter(r -> r.getId() != 0).collect(Collectors.toList());
     }
 }

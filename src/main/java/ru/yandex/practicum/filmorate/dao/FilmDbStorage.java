@@ -107,7 +107,7 @@ public class FilmDbStorage implements FilmStorage {
                 .addValue("description", film.getDescription())
                 .addValue("release_date", film.getReleaseDate())
                 .addValue("duration", film.getDuration())
-                .addValue("rating_name", film.getMpa().toString());
+                .addValue("rating_name", film.getMpa() != null ? film.getMpa().toString() : "NO_RATING");
         int id = simpleJdbcInsert.executeAndReturnKey(params).intValue();
         for (Genre genre : film.getGenres()) {
             jdbcTemplate.update("INSERT INTO film_genre (film_id, genre_id) VALUES (?,?)", id, genre.getId());
@@ -117,10 +117,18 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public Film update(Film film) {
-        int result = jdbcTemplate.update("UPDATE film " +
-                        "SET film_name=?, description=?, release_date=?, duration=?, rating_name=? " +
-                        "WHERE id=?", film.getName(), film.getDescription(), film.getReleaseDate(), film.getDuration(),
-                film.getMpa().toString(), film.getId());
+        int result = 0;
+        if (film.getMpa() != null) {
+            result = jdbcTemplate.update("UPDATE film " +
+                            "SET film_name=?, description=?, release_date=?, duration=?, rating_name=? " +
+                            "WHERE id=?", film.getName(), film.getDescription(), film.getReleaseDate(), film.getDuration(),
+                    film.getMpa().toString(), film.getId());
+        } else {
+            result = jdbcTemplate.update("UPDATE film " +
+                            "SET film_name=?, description=?, release_date=?, duration=? " +
+                            "WHERE id=?", film.getName(), film.getDescription(), film.getReleaseDate(), film.getDuration(),
+                    film.getId());
+        }
         if (result > 0) {
             jdbcTemplate.update("DELETE FROM film_genre WHERE film_id=?", film.getId());
             for (Genre genre : film.getGenres()) {
