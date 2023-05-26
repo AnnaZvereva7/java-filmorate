@@ -15,41 +15,41 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserService {
 
-    private final UserStorage userManager;
+    private final UserStorage userStorage;
 
     public UserService(@Qualifier("UserDbStorage") UserStorage userManager) {
-        this.userManager = userManager;
+        this.userStorage = userManager;
     }
 
     public User getById(Integer id) {
-        return userManager.getById(id);
+        return userStorage.getById(id);
     }
 
     public User add(User user) {
-        return userManager.add(rename(user));
+        return userStorage.add(rename(user));
     }
 
     public User update(User user) {
-        return userManager.update(rename(user));
+        return userStorage.update(rename(user));
     }
 
     public List<User> getAll() {
-        return userManager.getAll();
+        return userStorage.getAll();
     }
 
     public void addFriends(Integer id, Integer friendId) {
-        userManager.saveFriendship(id, friendId);
+        userStorage.saveFriendship(id, friendId);
     }
 
     public void remove(int id, int friendId) {
-        userManager.removeFriendship(id, friendId);
+        userStorage.removeFriendship(id, friendId);
     }
 
     public List<User> getCommonFriends(Integer id, Integer otherId) {
-        User user1 = getById(id);
-        User user2 = getById(otherId);
-        return user1.getFriendsId().stream()
-                .filter(it -> user2.getFriendsId().contains(it))
+        User user = getById(id);
+        User otherUser = getById(otherId);
+        return user.getFriendsId().stream()
+                .filter(it -> otherUser.getFriendsId().contains(it))
                 .map(this::getById)
                 .collect(Collectors.toList());
     }

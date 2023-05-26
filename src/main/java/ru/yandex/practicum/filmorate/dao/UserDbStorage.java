@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component("UserDbStorage")
-@Repository
 public class UserDbStorage implements UserStorage {
 
     private final JdbcTemplate jdbcTemplate;
@@ -82,7 +81,7 @@ public class UserDbStorage implements UserStorage {
         if (result > 0) {
             return user;
         } else {
-            throw new NotFoundInDB("Пользователь не обновлен");
+            throw new NotFoundInDB("Пользователя c id "+user.getId()+" нет в базе");
         }
     }
 
@@ -99,7 +98,7 @@ public class UserDbStorage implements UserStorage {
                     + "WHERE user_id=? AND friend_id=?", friendId, id);
         }
         if (result <= 0) {
-            throw new NotFoundInDB("Пользователь не найден");
+            throw new NotFoundInDB("Пользователь с id "+id+" и/или "+ friendId +" не найден");
         }
     }
 

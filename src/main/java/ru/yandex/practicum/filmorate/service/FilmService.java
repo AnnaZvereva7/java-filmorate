@@ -10,40 +10,40 @@ import java.util.List;
 @Service
 public class FilmService {
 
-    private final FilmStorage filmManager;
+    private final FilmStorage filmStorage;
 
     public FilmService(@Qualifier("FilmDbStorage") FilmStorage filmManager) {
-        this.filmManager = filmManager;
+        this.filmStorage = filmManager;
     }
 
     public List<Film> getAll() {
-        return filmManager.getAll();
+        return filmStorage.getAll();
     }
 
     public Film add(Film film) {
         if (film == null) {
             throw new NullPointerException("Передан пустой фильм");
         }
-        return filmManager.add(film);
+        return filmStorage.add(film);
     }
 
     public Film update(Film film) {
-        return filmManager.update(film);
+        return filmStorage.update(film);
     }
 
     public Film getById(int id) {
-        return filmManager.getById(id);
+        return filmStorage.getById(id);
     }
 
     public void addLike(int id, int userId) {
-        filmManager.addLike(id, userId);
+        filmStorage.addLike(id, userId);
     }
 
     public void deleteFilmLike(int id, int userId) {
-        filmManager.deleteFilmLike(id, userId);
+        filmStorage.deleteFilmLike(id, userId);
     }
 
     public List<Film> getTop(int count) {
-        return filmManager.getTop(count);
+        return filmStorage.getTop(count);
     }
 }

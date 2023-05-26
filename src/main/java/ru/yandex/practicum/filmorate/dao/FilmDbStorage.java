@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("FilmDbStorage")
-@Repository
 public class FilmDbStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
 
