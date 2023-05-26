@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundInDB;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
@@ -81,7 +80,7 @@ public class UserDbStorage implements UserStorage {
         if (result > 0) {
             return user;
         } else {
-            throw new NotFoundInDB("Пользователя c id "+user.getId()+" нет в базе");
+            throw new NotFoundInDB("Пользователя c id " + user.getId() + " нет в базе");
         }
     }
 
@@ -98,7 +97,7 @@ public class UserDbStorage implements UserStorage {
                     + "WHERE user_id=? AND friend_id=?", friendId, id);
         }
         if (result <= 0) {
-            throw new NotFoundInDB("Пользователь с id "+id+" и/или "+ friendId +" не найден");
+            throw new NotFoundInDB("Пользователь с id " + id + " и/или " + friendId + " не найден");
         }
     }
 
