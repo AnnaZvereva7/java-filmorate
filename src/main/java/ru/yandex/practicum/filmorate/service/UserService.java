@@ -1,12 +1,11 @@
 package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.model.exceptions.ObjectNotFound;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
@@ -15,53 +14,42 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class UserService {
-    private final UserStorage userManager;
 
-    public UserService(UserStorage userManager) {
-        this.userManager = userManager;
+    private final UserStorage userStorage;
+
+    public UserService(@Qualifier("UserDbStorage") UserStorage userManager) {
+        this.userStorage = userManager;
     }
 
     public User getById(Integer id) {
-        return userManager.getUserById(id);
+        return userStorage.getById(id);
     }
 
     public User add(User user) {
-        return userManager.add(rename(user));
+        return userStorage.add(rename(user));
     }
 
     public User update(User user) {
-        return userManager.update(rename(user));
+        return userStorage.update(rename(user));
     }
 
     public List<User> getAll() {
-        return userManager.getAll();
+        return userStorage.getAll();
     }
 
     public void addFriends(Integer id, Integer friendId) {
-        User user = getById(id);
-        User userToAdd = getById(friendId);
-        if (user.getFriendsId().add(friendId)) {
-            userToAdd.getFriendsId().add(id);
-        } else {
-            throw new KeyAlreadyExistsException("Уже есть такой друг");
-        }
+        userStorage.saveFriendship(id, friendId);
     }
 
-    public void remove(Integer id, Integer friendId) {
-        User user = getById(id);
-        User userToDelete = getById(friendId);
-        if (user.getFriendsId().remove(friendId)) {
-            userToDelete.getFriendsId().remove(id);
-        } else {
-            throw new ObjectNotFound(User.class);
-        }
+    public void remove(int id, int friendId) {
+        userStorage.removeFriendship(id, friendId);
     }
 
     public List<User> getCommonFriends(Integer id, Integer otherId) {
-        User user1 = getById(id);
-        User user2 = getById(otherId);
-        return user1.getFriendsId().stream()
-                .filter(it -> user2.getFriendsId().contains(it))
+        User user = getById(id);
+        User otherUser = getById(otherId);
+        return user.getFriendsId().stream()
+                .filter(it -> otherUser.getFriendsId().contains(it))
                 .map(this::getById)
                 .collect(Collectors.toList());
     }
